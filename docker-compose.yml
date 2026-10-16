@@ -1,7 +1,7 @@
 services:
   mongo:
     image: mongo:8
-    container_name: tradelab-mongo
+    container_name: tradelab-mongodb
     command: ["--replSet", "rs0", "--bind_ip_all", "--port", "27017"]
     ports:
       - "27017:27017"
