@@ -10,5 +10,7 @@ const walletSchema = new mongoose.Schema(
     },
     { timestamps: true, minimize: false }
 );
+
+
 walletSchema.index({ userId: 1 }, { unique: true });
 export const Wallet = mongoose.model('Wallet', walletSchema);
