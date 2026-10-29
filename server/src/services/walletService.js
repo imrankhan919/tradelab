@@ -1,6 +1,7 @@
 import mongoose from "mongoose"
-import User from "../models/User"
-import Wallet from "../models/Wallet"
+import { User } from "../models/User.js"
+import { Wallet } from "../models/Wallet.js"
+
 
 export async function createUserWithWallet({ email, name, passwordHash }) {
 

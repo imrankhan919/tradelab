@@ -2,6 +2,9 @@ import express from "express"
 import mongoose from 'mongoose';
 import cors from 'cors';
 import { env } from './config/env.js';
+import authRoutes from './routes/auth.js';
+import { generalLimiter } from './middleware/rateLimiter.js';
+import { errorHandler, notFoundHandler } from './middleware/errorHandler.js';
 
 export function createApp() {
 
@@ -14,6 +17,11 @@ export function createApp() {
         const up = mongoose.connection.readyState === 1;
         res.status(up ? 200 : 503).json({ ok: up });
     });
+
+    app.use('/api', generalLimiter);
+    app.use('/api/auth', authRoutes);
+    app.use(notFoundHandler);
+    app.use(errorHandler);
 
     return app;
 }
