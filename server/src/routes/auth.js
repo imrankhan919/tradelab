@@ -38,5 +38,16 @@ router.post('/register', authLimiter, validate(registerSchema), async (req, res)
 });
 
 
+router.post('/login', authLimiter, validate(loginSchema), async (req, res) => {
+    const { email, password } = req.valid.body;
+    const user = await User.findOne({ email: email.toLowerCase() });
+    // Same message for "no such email" and "wrong password": do not reveal which emails exist.
+    const ok = user && (await bcrypt.compare(password, user.passwordHash));
+    if (!ok) throw new AppError('BAD_CREDENTIALS', 'Invalid email or password', 401);
+    res.json({ token: signToken(user._id), user: publicUser(user) });
+});
+
+
+
 
 export default router
