@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import { env } from './config/env.js';
 import authRoutes from './routes/auth.js';
+import walletRoutes from './routes/wallet.js';
 import { generalLimiter } from './middleware/rateLimiter.js';
 import { errorHandler, notFoundHandler } from './middleware/errorHandler.js';
 
@@ -20,6 +21,7 @@ export function createApp() {
 
     app.use('/api', generalLimiter);
     app.use('/api/auth', authRoutes);
+    app.use('/api/wallet', walletRoutes);
     app.use(notFoundHandler);
     app.use(errorHandler);
 
